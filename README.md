@@ -1,31 +1,89 @@
 # TheDataRoleBlockSlim
 
-TODO: Write a gem description
+Mix of `data-role`, `data-block` solutions from:
+
+1. https://github.com/ai/evil-blocks
+2. https://github.com/kossnocorp/role
+
+Gem provide
+
+marker `@` for `data-role` and marker `@@` for `data-block` for `SLIM`
+
+```slim
+@hello-world
+  | Hello World
+
+@@some-block
+  | WebBrick
+```
+
+and JQ methods for `data-role` and `data-block` items
+
+```coffeescript
+$ ->
+  $('@hello-world').addRole 'sunshine'
+  $('@hello-world').removeRole 'sunshine'
+  $('@hello-world').toggleRole 'sunshine'
+
+  $('@@some-block').addBlock 'stone'
+  $('@@some-block').removeBlock 'stone'
+  $('@@some-block').toggleBlock 'stone'
+```
+
+## DATA-ATTRIBUTES notice
+
+I use
+
+1. `data-block` aka `@@` for containers
+2. `data-role` aka `@` for items with handlers or for items with values
+
+for example
+
+**SLIM**
+```slim
+button@btn-action
+
+@@home
+  | Hello World
+  a#bird(href='#') Tweet
+  a#cat(href='#') Meow
+  a#dog(href='#') Woof
+```
+
+**JS (CoffeeScript)**
+```coffeescript
+$ ->
+  $('@btn-action').on 'click', (e) ->
+    $('@@home a').addClass 'pet'
+    false
+
+  $('@@home a').on 'click', (e) ->
+    link = $ e.target
+    console.log link.text()
+    false
+```
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
+gem 'the_data_role_block_jquery'
 gem 'the_data_role_block_slim'
 ```
 
 And then execute:
 
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install the_data_role_block_slim
+```
+bundle
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+app/assets/javascripts/application.js
 
-## Contributing
+```
+//= require jquery.data-role-block
+```
 
-1. Fork it ( https://github.com/[my-github-username]/the_data_role_block_slim/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+## MIT license
